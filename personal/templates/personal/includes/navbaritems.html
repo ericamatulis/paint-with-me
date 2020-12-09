@@ -1,0 +1,13 @@
+
+        {% if user.is_authenticated %}
+             <li><a href="/">Draw</a></li>
+            <li><a href="/category_edit">Edit Categories</a></li>
+             <li><a href="/">{{user.username|title}}</a></li>
+{% if user.is_superuser %}
+                          <li><a href="/admin">Admin</a></li>
+{% endif %}
+<li><a href="/logout">Logout</a></li>
+        {% else %}
+            <li><a href="/login">Login</a></li>
+            <li><a href="/register">Register</a></li>
+        {% endif %}

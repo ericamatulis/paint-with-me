@@ -1,0 +1,222 @@
+html,
+body {
+  margin: 0px;
+  height:100%;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";font-size:1rem;font-weight:400;line-height:1.5;color:#212529;text-align:left;background-color:#fff
+}
+
+a {
+	color: #007bff;
+	text-decoration: none;
+}
+
+.container {
+	width: 100%;
+	padding-right: 50px;
+	padding-left: 50px;
+	margin-right: auto;
+	margin-left: auto;
+      display: block;
+  position: relative;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+#nav-mobile {
+    width: 100%;
+      list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+      background-color: #333;
+    position: relative;
+    z-index = -1;
+}
+
+#nav-mobile li {
+  float: left;
+}
+
+#nav-mobile li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+#nav-mobile li a:hover {
+  color: #333;
+  background-color: #FFF;
+}
+
+
+
+
+.dropbtn {
+  background-color: #fff;
+    width: 200px;
+  color: #333;
+  padding: 5px;
+  border: none;
+    text-align: left;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  font-size: 12px;
+}
+
+
+.dropdown-content a {
+  color: #333;
+  padding: 5px 5px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {background-color: #ddd;}
+
+.dropdown:hover .dropdown-content {display: block;}
+
+.dropdown:hover .dropbtn {background-color: #EEE;}
+
+
+
+.toast {
+    padding: 5px;
+	max-width: 350px;
+	overflow: hidden;
+	font-size: .875rem;
+	background-color: rgba(51, 51, 51, .1);
+	background-clip: padding-box;
+	border: 1px solid rgba(0, 0, 0, .1);
+	box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .1);
+	-webkit-backdrop-filter: blur(10px);
+	backdrop-filter: blur(10px);
+	opacity: 0;
+	border-radius: .25rem
+}
+
+.toast:not(:last-child) {
+	margin-bottom: .75rem
+}
+
+.toast.showing {
+	opacity: 1
+}
+
+.toast.show {
+	display: block;
+	opacity: 1
+}
+
+.toast.hide {
+	display: none
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* The container */
+.label-container {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 12px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.label-container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 15px;
+  width: 15px;
+  background-color: #eee;
+}
+
+/* On mouse-over, add a grey background color */
+.label-container:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.label-container input:checked ~ .checkmark {
+  background-color: #2196F3;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.label-container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.label-container .checkmark:after {
+  left: 3px;
+  top: 3px;
+  width: 4px;
+  height: 8px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+    
+    

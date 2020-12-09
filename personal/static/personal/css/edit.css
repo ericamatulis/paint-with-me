@@ -1,0 +1,44 @@
+#category_updates {
+  display:flex;
+  justify-content:center;  
+}
+#available-options, #edit-list-of-images {
+  height: 300px;
+  width: 200px; 
+}
+
+.transferButtons {
+  margin-right: 30px;
+  margin-left: 30px;
+}
+
+.transferButtons{
+  float:left; 
+  align-self:center;
+}
+
+
+.transferButtons input[type=button] {
+      -webkit-appearance: none;
+    height: 30px;
+    background-color:#FFF;
+    color:#333;
+    font-weight:bold;
+    border: solid #999 1px;
+    font-size: 11px;
+    cursor: pointer;
+    width: 100px;
+    text-align: center;
+}
+
+
+
+#edit-list-of-categories {
+    width: 200px;
+}
+
+#category_name {
+      display:flex;
+
+      justify-content:center;
+}

@@ -1,0 +1,80 @@
+{% extends "personal/header.html" %}
+
+{% block content %}
+    
+
+
+<div id="category_updates" class="center" style="width:90%; margin-top:20px">
+
+<div hidden class="hidden">
+    <textarea hidden id="alloptions">{% for item in category_list2 %}{% if item.0 == "all" %}{% for matrix in item.1 %}{{matrix}}---end---{% endfor %}{% endif %}{% endfor %}</textarea> 
+
+</div>
+    
+<div class="AvailableOptions">
+            Select category to edit:
+    <br>
+    <select style="width:190px" id = "edit-list-of-categories"> 
+    {% for category in category_list %}
+<br>
+<option value = '{{category}}'>{{category}}</option>
+
+
+<br>
+{% endfor %}
+
+    </select>
+    <br><br>
+    <b>Available Options:</b><br/>
+<select class = 'list-group' style="height: 300px; width: 200px; border: 1px solid #999;"  multiple="multiple" id='available-options'>
+        </select>
+</div>
+<div class="transferButtons">
+  <input type='button' onclick="leftToRight()" id='btnRight' value ='>'>
+  <br/><input type='button' onclick="rightToLeft()" id='btnLeft' value ='<'>
+  
+  
+  
+  <br>
+  <button onclick="updateOptions()">Update Category</button>
+  
+    <form hidden action="" method="post" name="load_drawing_form" style="height:10px" >
+        {% csrf_token %}
+  <br/><button type="submit" name="Update Category" value="Update Category" id="update_category" style="width:150px;" class="dropbtn">Update Category</button>
+  <textarea name='selected_options' id="selected_options"></textarea>
+            <input name="selected_category_name2" id="selected_category_name2">
+    </form> 
+  
+  
+  
+  
+  
+</div>
+
+<div class = "CurrentOptions">
+<br><br><br>
+<b>Current Options:</b><br/>
+<select style="width:200px; border: 1px solid #999;" id = "edit-list-of-images" size="5" class="list-group" multiple="multiple" > 
+    {% for item in category_list2 %}
+<br>
+{% for matrix in item.1 %}
+<option class = '{{item.0}}' value = '{{matrix}}'>{{matrix}}</option>
+
+
+<br>
+{% endfor %}
+<br><br>
+{% endfor %}
+    
+        </select>
+
+
+
+</div>
+</div>
+{% endblock %}    
+
+
+    
+
+	

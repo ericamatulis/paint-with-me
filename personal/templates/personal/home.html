@@ -1,0 +1,223 @@
+{% extends "personal/header.html" %}
+
+{% block content %}
+
+
+
+<div class="center" style="width:400px">
+
+<br>
+
+<div name="colors_and_brushes" class="center" style="width:400px">
+  
+
+  <img src="https://www.clipartkey.com/mpngs/m/98-980616_paint-brush-paint-brush-black-and-white.png" id="brushimage" width="34" height="34" style="border:3px solid #333; cursor: pointer;">
+  
+  <img src="https://www.clipartmax.com/png/middle/105-1057105_how-to-set-use-paint-can-and-brush-svg-vector-paint-bucket.png" alt="Paint bucket" id="bucketimage" width="34" height="34" style="border:1px solid #999; cursor: pointer;">
+
+  
+  <svg width="34" height="34"><rect id="selected color box" width="34" height="34" style="fill:#FFFFFF;stroke-width:5;stroke:#333" /> </svg>
+  <canvas id="colorCanvas" width="224" height="32" style="border:1px solid #999;"/>
+  
+</div>
+
+
+
+<div id = "canvas-buttons">
+    <button id="clear" style="width:50px;">Clear</button>
+    <button onclick="invert_colors()">⇵</button>
+    <button onclick="shift_left()">←</button>
+    <button onclick="shift_right()">→</button>
+    <button onclick="shift_up()">↑</button>
+    <button onclick="shift_down()">↓</button>
+    <button onclick="rotate_canvas_left()">↶</button><button onclick="rotate_canvas_right()">↷</button>
+    <button onclick="undoLastAction()" style="width:50px;">Undo</button>
+    <button onclick="redoLastAction()" style="width:50px;">Redo</button>
+</div>
+
+
+
+
+
+<div name="drawingcanvas_div" style="width=365px;">  
+  <canvas id="drawingCanvas" width="365" height="365" style="border:1px solid #333;"/>
+</div>
+
+
+
+    <div id="canvas-bottom-buttons">
+<div style="float: left">
+<button onclick="show_dimensions()">Set dimensions</button>
+    <div style="display: none;" class="file-dropdown-content"  id="matrix_dimensions_div">    
+    <label for="input_matrix_dimensions" style="width:146px; margin-right:10px;">Matrix dimensions:</label>
+    <input type="number" min=1 id="input_matrix_dimensions" value='{{dimensions}}' onchange="updateDimensions()" style="width:50px;">       
+    <button type="button" id="set_dimensions" onclick="set_dimensions()" style="margin-left: 15px; width:150px;">Set dimensions</button>  
+</div>
+
+</div>
+    
+<div style="float:left;">
+<button onclick="show_save()">Save</button>
+
+
+
+<br>
+
+
+<div class="file-dropdown-content" style="display: none;" name="matrix_and_save_div" id="matrix_and_save_div">
+    
+    <form action="" method="post">
+        {% csrf_token %}
+        
+        <div name="hidden_fields_div">
+            <input hidden type="text" name="selected_categories" id="selected_categories" value="all">
+            <input hidden type="number" id="matrix_dimensions" name="matrix_dimensions" value='{{dimensions}}'>
+            <input hidden type="submit" name="Save" value="Save" id="save_hidden">
+        </div>
+
+        
+        <div id="matrix_input_div">
+            <textarea name="input_matrix" id="input_matrix">{{matrix}}</textarea>
+            <button type="button" onclick="image_from_matrix()">Create drawing</button>
+        </div>
+        
+        {% if matrix_input != '0' %}
+        <br>    
+        <br>
+        {% endif %}
+        
+        
+
+
+        
+        <div name="save_image_div" style="margin-bottom:5px;">
+            <input id="namefield" type="text" name="namefield", placeholder="Name to save as" style="width:200px;">
+            <button type="button" onclick="save_shown()" id="save shown" style="width:150px;">Save</button>
+        </div>
+        
+        
+    
+                <div class = "dropdown" name="category_selection_div" id="category_selection_div" style="float:left">
+            <button type="button" class="dropbtn" style="width:200px;">Select categories</button>
+            <div class="dropdown-content" id="categories">
+                {% for category in category_list %}
+    <label class="label-container category-option">{{category.category_name}}
+  <input type="checkbox">
+  <span class="checkmark"></span>
+</label>
+                {% endfor %}
+            </div>
+    </div>
+        
+        
+        
+        
+        <div id="category_creation-div">
+        <button type="button" onclick="view_category_creation()" class="dropbtn" style="width:150px; margin-left:3px;">Create Category</button>
+        </div>
+        <div  name="category_creation_div" id="category_creation_div" style="display: none;">
+            <input type="text" name="categoryfield" id="categoryfield" placeholder="Category name" style="width:200px;">
+            <button type="submit" name="CreateCategory" value="Create Category" id="create_category" style="width:150px;" class="dropbtn">Create</button>
+        </div>
+            
+
+    </form>
+
+
+
+    
+    
+    
+    
+    
+    
+    
+
+
+  
+    
+    
+</div>
+
+
+</div>
+
+
+<div style="float:left">
+<button onclick="view_load()">Load</button>
+    <br>
+    <div id="load_section" class="file-dropdown-content" style="display: none;">
+
+        
+<div name="selections_for_load_div" style="width:200px; float:left; position: relative" class="list-group">
+  
+    <div class="select" style="border: 1px solid #999;">
+
+    <select style="width:190px" id = "list-of-categories"> 
+<option value='all'>all</option>
+    {% for category in category_list %}
+<br>
+<option value = '{{category}}'>{{category}}</option>
+
+
+<br>
+{% endfor %}
+
+    <span class="focus"></span>
+    </select>  
+        </div>
+
+    <div style="padding-top:10px; padding-bottom: 10px">
+<select style="width:200px; border: 1px solid #999;" id = "list-of-images2" size="5" class="list-group"> 
+    {% for item in category_list2 %}
+<br>
+{% for matrix in item.1 %}
+<option class = '{{item.0}}' value = '{{matrix}}'>{{matrix}}</option>
+
+
+<br>
+{% endfor %}
+<br><br>
+{% endfor %}
+    
+        </select> </div>
+    
+    
+        <button type="button" onclick="load_shown()" style="width:200px;">Load</button>
+    
+
+    
+    <form hidden action="" method="post" name="load_drawing_form" style="height:10px" >
+        {% csrf_token %}
+        <input hidden name="selected_matrix_name" id="selected_matrix_name">
+        <input hidden type="submit" name="Load" value='Load' id="load_hidden">
+    </form> 
+    
+
+    </div>
+</div>
+</div>
+</div>
+    
+
+
+        <input hidden name="selected_category_name" id="selected_category_name">
+
+ 
+
+
+
+
+
+
+
+
+    <select hidden style="height:256px; width:200px" id = "list-of-images" size="5">  
+        {% for matrix in matrix_list %}
+        <option value='{{matrix.matrix_name}}'> {{matrix.matrix_name}} </option>  
+        {% endfor %}
+    </select>
+    
+</div>
+
+{% endblock %}

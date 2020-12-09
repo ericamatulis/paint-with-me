@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+  	<title>Paint with Erica</title>
+    
+    <meta charset="utf-8">
+    {% load static %}
+	
+
+    <link rel="stylesheet" href="{% static 'personal/css/erica.css' %}" type = "text/css"/>
+    <link rel="stylesheet" href="{% static 'personal/css/edit.css' %}" type = "text/css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+      
+    {% if dimensions|add:"0" > 0 %}
+    <style type="text/css">
+          #matrix_dimensions_div {
+              display: none;
+          }
+      </style>       
+    {% endif %}
+      
+    {% if matrix_input == '0' %}
+    <style type="text/css">
+          #matrix_input_div {
+              display: none;
+          }
+      </style>       
+    {% endif %}
+
+
+</head>
+    
+    
+    
+<body>
+    <nav>
+        <div class="nav-wrapper">
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                {% include 'personal/includes/navbaritems.html' %}
+            </ul>
+        </div>
+    </nav>
+
+    {% include 'personal/includes/messaging.html' %}
+  
+
+
+    <div class="container">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+
+    <script src="{% static 'personal/js/erica.js' %}"></script>
+    <script src="{% static 'personal/js/edit.js' %}"></script>
+</body>    
+	
+
+</html>
+
