@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from personal.models import Matrix,MatrixGroup
+from personal.models import Matrix, Category, Group
 from django.db import transaction
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import logout, authenticate, login
@@ -25,19 +25,19 @@ def index(request):
                 matrix_list = Matrix.objects.all()
             # If to show all dimensions but a specific category, get all matrices in that category
             else:
-                matrix_list = MatrixGroup.objects.get(category_name=category).matrices.all()
+                matrix_list = Category.objects.get(category_name=category).matrices.all()
         else:
             # If to show a specific dimension and all categories, get all matrices with a specific dimension
             if category == '0':
                 matrix_list = Matrix.objects.filter(dimension=int(dimensions))
             # If to show a specific dimension and category, get all matrices in that category with that specific dimension
             else:
-                matrix_list = MatrixGroup.objects.get(category_name=category).matrices.all().filter(dimension=int(dimensions))
+                matrix_list = Category.objects.get(category_name=category).matrices.all().filter(dimension=int(dimensions))
         
         # Get list of all categories to show in view
-        category_list = MatrixGroup.objects.exclude(category_name="all")
+        category_list = Category.objects.exclude(category_name="all")
         
-        category_list2 = [(category.category_name, [matrix.matrix_name for matrix in category.matrices.all()]) for category in [category for category in MatrixGroup.objects.all()]]
+        category_list2 = [(category.category_name, [matrix.matrix_name for matrix in category.matrices.all()]) for category in [category for category in Category.objects.all()]]
 
 
         
@@ -59,7 +59,7 @@ def index(request):
                     # For each category in the list of categories the matrix is to be a member of, add the matrix to that category's matrices attribute
                     for cat in categories:
                         try:
-                            cat_group = MatrixGroup.objects.get(category_name=cat)
+                            cat_group = Category.objects.get(category_name=cat)
                             cat_group.matrices.add(new_matrix)
                             cat_group.save()
                         except:
@@ -75,7 +75,7 @@ def index(request):
                     # For each category in the list of categories the matrix is to be a member of, add the matrix to that category's matrices attribute
                     for cat in categories:
                         try:
-                            cat_group = MatrixGroup.objects.get(category_name=cat)
+                            cat_group = Category.objects.get(category_name=cat)
                             cat_group.matrices.add(matrix_instance)
                             cat_group.save()
                         except:
@@ -90,7 +90,7 @@ def index(request):
                                            'dimensions': -1, # Dimensions to show
                                            'matrix_input': matrix_input, # Whether to show matrix table or not
                                            'category_list':category_list, # List of categories to show in view
-                                           'category_list2': [(category.category_name, [matrix.matrix_name for matrix in category.matrices.all()]) for category in [category for category in MatrixGroup.objects.all()]]
+                                           'category_list2': [(category.category_name, [matrix.matrix_name for matrix in category.matrices.all()]) for category in [category for category in Category.objects.all()]]
                                           }
                 )
 
@@ -113,7 +113,7 @@ def index(request):
             # If request is to create a new category
             elif 'CreateCategory' in request.POST:
                 new_category = request.POST.get('categoryfield')
-                MatrixGroup.objects.create(category_name=new_category)
+                Category.objects.create(category_name=new_category)
                 value = request.POST.get('input_matrix') # Get current matrix being drawn, so view can remain the same after submitting request
                 
                 return render(request,
@@ -201,36 +201,64 @@ def login_request(request):
 
 # Logout view
 def edit_request(request):
-    category_list2 = [(category.category_name, [matrix.matrix_name for matrix in category.matrices.all()]) for category in [category for category in MatrixGroup.objects.all()]]
-    category_list = MatrixGroup.objects.exclude(category_name="all")
+    category_list2 = [(category.category_name, [matrix.matrix_name for matrix in category.matrices.all()]) for category in [category for category in Category.objects.all()]]
+    category_list = Category.objects.exclude(category_name="all")
     
     
     
     if request.method == 'POST':
-        cat_name = request.POST.get('selected_category_name2')
-        matrix_names = request.POST.get('selected_options')
-        matrix_names = matrix_names.split(",")
-    
-        cat_group = MatrixGroup.objects.get(category_name=cat_name)
-        cat_group.matrices.clear()
-                    
-            
-        for matrix in matrix_names:
-            try:
-                matrix_instance = Matrix.objects.get(matrix_name=matrix)
-                cat_group.matrices.add(matrix_instance)
-                cat_group.save()
-            except:
-                pass
+        # If request is to save the matrix
+        if 'Update Category' in request.POST:
+            cat_name = request.POST.get('selected_category_name2')
+            matrix_names = request.POST.get('selected_options')
+            matrix_names = matrix_names.split(",")
 
-        category_list2 = [(category.category_name, [matrix.matrix_name for matrix in category.matrices.all()]) for category in [category for category in MatrixGroup.objects.all()]]
-        category_list = MatrixGroup.objects.exclude(category_name="all")
-                        
-                            
-        return render(request = request, template_name = "personal/category_edit.html", context={"category_list2":category_list2, "category_list":category_list})
+            cat_group = Category.objects.get(category_name=cat_name)
+            cat_group.matrices.clear()
+
+
+            for matrix in matrix_names:
+                try:
+                    matrix_instance = Matrix.objects.get(matrix_name=matrix)
+                    cat_group.matrices.add(matrix_instance)
+                    cat_group.save()
+                except:
+                    pass
+
+            category_list2 = [(category.category_name, [matrix.matrix_name for matrix in category.matrices.all()]) for category in [category for category in Category.objects.all()]]
+            category_list = Category.objects.exclude(category_name="all")
+
+
+            return render(request = request, template_name = "personal/category_edit.html", context={"category_list2":category_list2, "category_list":category_list})
 
     
+                # If request is to create a new category
+        elif 'CreateCategory' in request.POST:
+            new_category = request.POST.get('categoryfield')
+            Category.objects.create(category_name=new_category)
+
+
+            category_list2 = [(category.category_name, [matrix.matrix_name for matrix in category.matrices.all()]) for category in [category for category in Category.objects.all()]]
+            category_list = Category.objects.exclude(category_name="all")
+
+
+            return render(request = request, template_name = "personal/category_edit.html", context={"category_list2":category_list2, "category_list":category_list})
     
+        elif 'Delete Category' in request.POST:
+            cat_name = request.POST.get('selected_category_name2')
+            Category.objects.get(category_name=cat_name).delete()
     
+            category_list2 = [(category.category_name, [matrix.matrix_name for matrix in category.matrices.all()]) for category in [category for category in Category.objects.all()]]
+            category_list = Category.objects.exclude(category_name="all")
+
+
+            return render(request = request, template_name = "personal/category_edit.html", context={"category_list2":category_list2, "category_list":category_list})
+        
     
     return render(request = request, template_name = "personal/category_edit.html", context={"category_list2":category_list2, "category_list":category_list})
+
+
+# Logout view
+def profile(request):
+    return  render(request, 'personal/profile.html')
+

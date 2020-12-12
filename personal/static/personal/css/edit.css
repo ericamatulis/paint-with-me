@@ -4,12 +4,17 @@
 }
 #available-options, #edit-list-of-images {
   height: 300px;
-  width: 200px; 
+  width: 100%; 
+}
+
+.AvailableOptions, .CurrentOptions {
+    width:40%
 }
 
 .transferButtons {
   margin-right: 30px;
   margin-left: 30px;
+    width:20%
 }
 
 .transferButtons{
@@ -27,10 +32,16 @@
     border: solid #999 1px;
     font-size: 11px;
     cursor: pointer;
-    width: 100px;
+    width: 50%;
     text-align: center;
 }
 
+
+.transferButtons input[type=button]:hover {
+        font-weight: bold;
+    background-color:#f1f1f1;
+    color:#333;
+}
 
 
 #edit-list-of-categories {
@@ -41,4 +52,10 @@
       display:flex;
 
       justify-content:center;
+}
+
+
+#category_updates {
+    font-size: 12px;
+    
 }

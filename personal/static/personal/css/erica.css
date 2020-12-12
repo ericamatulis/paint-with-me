@@ -102,7 +102,7 @@ button:hover {
     text-align: left;
 }
 
-#category_selection_div button, #category_creation-div button, #category_creation_div button {
+#category_selection_div button, #category_creation-div button, #category_creation_div button, #category_creation_div2 button {
         border: solid #ddd 1px;
                 font-weight:100
 }
@@ -119,7 +119,7 @@ button:hover {
     font-weight:bold
 }
 
-#category_creation_div button:hover {
+#category_creation_div button:hover, #category_creation_div2 button:hover {
         background-color:#f1f1f1;
     color:#333;
     font-weight:bold
@@ -385,11 +385,9 @@ input[type=text] {
 }
 
 
-#category_creation_div {
+#category_creation_div, #category_creation_div2 {
       padding: 10px;
     border: solid 1px #EEE;
-    display: none;
-  position: absolute;
   background-color: #fff;
   min-width: 160px;
   z-index: 1;
@@ -405,3 +403,5 @@ input[type=text] {
 #drawingCanvas {
     cursor: crosshair;
 }
+
+

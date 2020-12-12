@@ -49,15 +49,15 @@
 <div style="float: left">
 <button onclick="show_dimensions()">Set dimensions</button>
     <div style="display: none;" class="file-dropdown-content"  id="matrix_dimensions_div">    
-    <label for="input_matrix_dimensions" style="width:146px; margin-right:10px;">Matrix dimensions:</label>
+    <label for="input_matrix_dimensions" style="width:186px; margin-right:10px;">Matrix dimensions:</label>
     <input type="number" min=1 id="input_matrix_dimensions" value='{{dimensions}}' onchange="updateDimensions()" style="width:50px;">       
-    <button type="button" id="set_dimensions" onclick="set_dimensions()" style="margin-left: 15px; width:150px;">Set dimensions</button>  
+    <button type="button" id="set_dimensions" onclick="set_dimensions()" style="margin-left: 15px; width:110px;">Set</button>  
 </div>
 
 </div>
     
 <div style="float:left;">
-<button onclick="show_save()">Save</button>
+<button onclick="show_save()">Save image</button>
 
 
 
@@ -144,7 +144,7 @@
 
 
 <div style="float:left">
-<button onclick="view_load()">Load</button>
+<button onclick="view_load()">Load image</button>
     <br>
     <div id="load_section" class="file-dropdown-content" style="display: none;">
 
@@ -183,7 +183,7 @@
         </select> </div>
     
     
-        <button type="button" onclick="load_shown()" style="width:200px;">Load</button>
+        <button type="button" onclick="load_shown()" style="width:200px;">Load selection</button>
     
 
     

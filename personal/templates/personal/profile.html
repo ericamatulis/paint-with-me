@@ -1,0 +1,16 @@
+{% extends "personal/header.html" %}
+
+{% block content %}
+
+<div class="container center" style="width:90%;justify-content:center; ">
+    <ul id="profile-items" class="right hide-on-med-and-down" style="list-style-type: none;">
+             <li><b>User name:</b> {{user.username|title}}</li>
+             <li><b>Role:</b> {% if user.is_superuser %}Superuser{% else %}Basic{% endif %}
+</li>
+    </ul>
+</div>
+
+
+{% endblock %}
+
+	

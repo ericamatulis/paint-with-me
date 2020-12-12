@@ -2,7 +2,7 @@
         {% if user.is_authenticated %}
              <li><a href="/">Draw</a></li>
             <li><a href="/category_edit">Edit Categories</a></li>
-             <li><a href="/">{{user.username|title}}</a></li>
+             <li><a href="/profile">{{user.username|title}}</a></li>
 {% if user.is_superuser %}
                           <li><a href="/admin">Admin</a></li>
 {% endif %}

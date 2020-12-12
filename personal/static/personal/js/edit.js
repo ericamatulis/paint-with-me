@@ -125,6 +125,18 @@ function load_available_list_of_images(){
 
 
 
+function delete_category(){
+    var category = document.getElementById("selected_category_name2").value
+    var answer = window.confirm("Are you sure you want to delete the category ".concat(category).concat("?"));
+    
+    if (answer == true){
+      document.getElementById("delete_category").click()
+      window.alert(category.concat(" has been deleted"))
+    }
+
+    
+}
+
 /// As user clicks on image name option, change load selection name to chosen image name
 cat_list2 = $("#edit-list-of-categories"); 
 cat_list2.off().on("change",load_current_list_of_images);
