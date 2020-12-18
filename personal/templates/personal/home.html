@@ -36,11 +36,10 @@
 </div>
 
 
-
-
-<div name="drawingcanvas_div" style="width=365px;">  
-  <canvas id="drawingCanvas" width="365" height="365" style="border:1px solid #333;"/>
-</div>
+<div name="drawingcanvas_div" style="width=365px; position:relative;">  
+    {% if not user.is_superuser %}<div style="position: absolute;top:0;left:0;width: 367px;height:367px;z-index:2;"></div>{%endif%}
+    <canvas id="drawingCanvas" width="365" height="365" style="border:1px solid #333;"/>
+    </div>
 
 
 
