@@ -22,8 +22,8 @@ class Matrix(models.Model):
     
 class Category(models.Model):
     category_name = models.CharField(max_length=200, unique=True)
-    category_summary = models.CharField(max_length=200, default="")
-    matrices = models.ManyToManyField(Matrix)
+    category_summary = models.CharField(max_length=200, blank=True, default="")
+    matrices = models.ManyToManyField(Matrix, blank=True)
     
     class Meta:
         ordering = ['category_name']
@@ -37,8 +37,8 @@ class Category(models.Model):
 
 class Group(models.Model):
     group_name = models.CharField(max_length=200, unique=True)
-    group_summary = models.CharField(max_length=200, default="")
-    matrices = models.ManyToManyField(Matrix)
+    group_summary = models.CharField(max_length=200, blank=True, default="")
+    matrices = models.ManyToManyField(Matrix, blank=True)
     
     class Meta:
         ordering = ['group_name']

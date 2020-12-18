@@ -64,7 +64,9 @@ def index(request):
                             cat_group.save()
                         except:
                             pass
-                        
+                    group = Group.objects.get(group_name="all")
+                    group.matrices.add(new_matrix)
+                    group.save()
                 # If matrix already exists, replace existing matrix
                 except:                
                     matrix_instance = Matrix.objects.get(matrix_name=name)
@@ -199,8 +201,8 @@ def login_request(request):
                     context={"form":form})
 
 
-# Logout view
-def edit_request(request):
+# Category edit view
+def category_edit_request(request):
     category_list2 = [(category.category_name, [matrix.matrix_name for matrix in category.matrices.all()]) for category in [category for category in Category.objects.all()]]
     category_list = Category.objects.exclude(category_name="all")
     
@@ -259,6 +261,69 @@ def edit_request(request):
 
 
 # Logout view
+
+# Profile view
 def profile(request):
     return  render(request, 'personal/profile.html')
 
+
+# Group edit view
+def group_edit_request(request):
+    category_list2 = [(category.group_name, [matrix.matrix_name for matrix in category.matrices.all()]) for category in [category for category in Group.objects.all()]]
+    category_list = Group.objects.exclude(group_name="all")
+    
+    
+    
+    if request.method == 'POST':
+        # If request is to save the matrix
+        if 'Update Category' in request.POST:
+            cat_name = request.POST.get('selected_category_name2')
+            matrix_names = request.POST.get('selected_options')
+            matrix_names = matrix_names.split(",")
+
+            cat_group = Group.objects.get(group_name=cat_name)
+            cat_group.matrices.clear()
+
+
+            for matrix in matrix_names:
+                try:
+                    matrix_instance = Matrix.objects.get(matrix_name=matrix)
+                    cat_group.matrices.add(matrix_instance)
+                    cat_group.save()
+                except:
+                    pass
+
+            category_list2 = [(category.group_name, [matrix.matrix_name for matrix in category.matrices.all()]) for category in [category for category in Group.objects.all()]]
+            category_list = Group.objects.exclude(group_name="all")
+
+
+            return render(request = request, template_name = "personal/group_edit.html", context={"category_list2":category_list2, "category_list":category_list})
+
+    
+                # If request is to create a new category
+        elif 'CreateCategory' in request.POST:
+            new_category = request.POST.get('categoryfield')
+            Group.objects.create(group_name=new_category)
+
+
+            category_list2 = [(category.group_name, [matrix.matrix_name for matrix in category.matrices.all()]) for category in [category for category in Group.objects.all()]]
+            category_list = Group.objects.exclude(group_name="all")
+
+
+            return render(request = request, template_name = "personal/group_edit.html", context={"category_list2":category_list2, "category_list":category_list})
+    
+        elif 'Delete Category' in request.POST:
+            cat_name = request.POST.get('selected_category_name2')
+            Group.objects.get(group_name=cat_name).delete()
+    
+            category_list2 = [(category.group_name, [matrix.matrix_name for matrix in category.matrices.all()]) for category in [category for category in Group.objects.all()]]
+            category_list = Group.objects.exclude(group_name="all")
+            
+
+            return render(request = request, template_name = "personal/group_edit.html", context={"category_list2":category_list2, "category_list":category_list})
+        
+    
+    return render(request = request, template_name = "personal/group_edit.html", context={"category_list2":category_list2, "category_list":category_list})
+
+
+# Logout view

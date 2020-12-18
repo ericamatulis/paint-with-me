@@ -10,7 +10,9 @@ urlpatterns = [
     path("register", views.register, name="register"),
     path("logout", views.logout_request, name="logout"),
     path("login", views.login_request, name="login"),
-    path("category_edit", views.edit_request, name="category_edit"),
+    path("category_edit", views.category_edit_request, name="category_edit"),
     path("profile", views.profile, name="profile"),
+    path("group_edit", views.group_edit_request, name="group_edit"),
+
 
 ]
