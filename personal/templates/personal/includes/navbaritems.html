@@ -1,14 +1,18 @@
 
-        {% if user.is_authenticated %}
-             <li><a href="/">Draw</a></li>
-            <li><a href="/category_edit">Edit Categories</a></li>
-            <li><a href="/group_edit">Edit Groups</a></li>
-             <li><a href="/profile">{{user.username|title}}</a></li>
+   {% with url_name=request.resolver_match.url_name %}
+     {% if user.is_authenticated %}
+             <li class="{% if url_name == 'index' %}active{% endif %}"><a href="/">{% if user.is_superuser %}Draw{% else %}View{% endif %}</a></li>
+{% if user.is_superuser %}
+            <li class="{% if url_name == 'category_edit' %}active{% endif %}"><a href="/category_edit">Edit Categories</a></li>
+            <li class="{% if url_name == 'group_edit' %}active{% endif %}"><a href="/group_edit">Edit Groups</a></li>
+{% endif %}
+             <li class="{% if url_name == 'profile' %}active{% endif %}"><a href="/profile">{{user.username|title}}</a></li>
 {% if user.is_superuser %}
                           <li><a href="/admin">Admin</a></li>
 {% endif %}
-<li><a href="/logout">Logout</a></li>
+<li class="{% if url_name == 'logout' %}active{% endif %}"><a href="/logout">Logout</a></li>
         {% else %}
-            <li><a href="/login">Login</a></li>
-            <li><a href="/register">Register</a></li>
+            <li class="{% if url_name == 'login' %}active{% endif %}"><a href="/login">Login</a></li>
+            <li class="{% if url_name == 'register' %}active{% endif %}"><a href="/register">Register</a></li>
         {% endif %}
+{% endwith %}
