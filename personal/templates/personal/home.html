@@ -38,7 +38,7 @@
 
 <div name="drawingcanvas_div" style="width=365px; position:relative;">  
     {% if not user.is_superuser %}<div style="position: absolute;top:0;left:0;width: 367px;height:367px;z-index:2;"></div>{%endif%}
-    <canvas id="drawingCanvas" width="365" height="365" style="border:1px solid #333;"/>
+    <canvas id="drawingCanvas" width="365" height="365" style="border:1px solid #333; background-color:white;"/>
     </div>
 
 
@@ -166,8 +166,8 @@
         </div>
 
     <div style="padding-top:10px; padding-bottom: 10px">
-<select style="width:200px; border: 1px solid #999;" id = "list-of-images2" size="5" class="list-group"> 
-    {% for item in category_list2 %}
+<select style="width:200px; border: 1px solid #999;" id = "load-options" size="5" class="list-group"> 
+    {% for item in categories_and_matrices %}
 <br>
 {% for matrix in item.1 %}
 <option class = '{{item.0}}' value = '{{matrix}}'>{{matrix}}</option>
@@ -187,8 +187,8 @@
     
     <form hidden action="" method="post" name="load_drawing_form" style="height:10px" >
         {% csrf_token %}
-        <input hidden name="selected_matrix_name" id="selected_matrix_name">
-        <input hidden type="submit" name="Load" value='Load' id="load_hidden">
+        <input name="selected_matrix_name" id="selected_matrix_name">
+        <input type="submit" name="Load" value='Load' id="load_hidden">
     </form> 
     
 
@@ -210,11 +210,7 @@
 
 
 
-    <select hidden style="height:256px; width:200px" id = "list-of-images" size="5">  
-        {% for matrix in matrix_list %}
-        <option value='{{matrix.matrix_name}}'> {{matrix.matrix_name}} </option>  
-        {% endfor %}
-    </select>
+
     
 </div>
 

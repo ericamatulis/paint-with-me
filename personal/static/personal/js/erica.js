@@ -44,12 +44,22 @@ for (color_hex in color_hexs){
   offset += 32;
 }
 
-/// Get list of available options to load
+/// Get list of available image options to load
 var list_of_options = []
 
-for (k in [...Array(document.getElementById('list-of-images').options.length).keys()]) {
-  list_of_options = list_of_options.concat(document.getElementById('list-of-images').options[k].value)
+for (k in [...Array(document.getElementById('load-options').options.length).keys()]) {
+  list_of_options = list_of_options.concat(document.getElementById('load-options').options[k].value)
 }
+
+var $options = $("#load-options").clone(); // this will save all initial options in the second dropdown
+
+$("#load-options").html("");
+
+$options.find("option").each(function(optionIndex, option) { // a second loop that check if the option value is of the selected category
+        if ($(option)[0].getAttribute("class")=="all")
+          $(option).clone().appendTo($("#load-options"));
+
+    });
 
 /// Initialize canvas
 
@@ -123,6 +133,9 @@ load_list = $(".list-group"); load_list.off().on("click",load);
 
 /// As user clicks on categories, change category selection to include selected ones
 document.getElementById('categories').addEventListener('click', selectCategories, false);
+
+/// As user clicks on category name, change load options to images in the category
+cat_list = $("#list-of-categories"); cat_list.off().on("change",category_load);
 
 
 
@@ -515,7 +528,7 @@ function selectbrush(){
 
 /// As user clicks on image name option, change load selection name to chosen image name
  function load(){
-  var sel = document.getElementById('list-of-images2')
+  var sel = document.getElementById('load-options')
   var listLength = sel.options.length;
    for (var i = 0; i < listLength; i++) {
         if (sel.options[i].selected) {
@@ -551,7 +564,7 @@ function selectCategories(){
     document.getElementById("matrix_dimensions").value = document.getElementById("input_matrix_dimensions").value
 }
 
-
+/// Show dimensions update box
 function show_dimensions(){
     var x = document.getElementById("matrix_dimensions_div")
       if (x.style.display === "none") {
@@ -570,6 +583,7 @@ function show_dimensions(){
 
 }
 
+/// Show save box
 function show_save(){
     var x = document.getElementById("matrix_and_save_div")
       if (x.style.display === "none") {
@@ -587,6 +601,7 @@ function show_save(){
   }
 }
 
+/// Show load box
 function view_load(){
     var x = document.getElementById("load_section")
       if (x.style.display === "none") {
@@ -604,8 +619,7 @@ function view_load(){
   }
 }
 
-
-
+/// View category creation box
 function view_category_creation(){
     var x = document.getElementById("category_creation_div")
       if (x.style.display === "none") {
@@ -615,54 +629,8 @@ function view_category_creation(){
   }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  var $options = $("#list-of-images2").clone(); // this will save all initial options in the second dropdown
-
-
-    $("#list-of-images2").html("");
-
-      $options.find("option").each(function(optionIndex, option) { // a second loop that check if the option value starts with the filter value
-        if ($(option)[0].getAttribute("class")=="all")
-          $(option).clone().appendTo($("#list-of-images2"));
-
-    });
-
-
-
 /// As user clicks on image name option, change load selection name to chosen image name
- function load3(){
+ function category_load(){
   var sel = document.getElementById('list-of-categories')
   var listLength = sel.options.length;
    for (var i = 0; i < listLength; i++) {
@@ -673,15 +641,11 @@ function view_category_creation(){
     }
          var value = document.getElementById("selected_category_name").value
 
-    $("#list-of-images2").html("");
+    $("#load-options").html("");
 
       $options.find("option").each(function(optionIndex, option) { // a second loop that check if the option value starts with the filter value
         if ($(option)[0].getAttribute("class")==value)
-          $(option).clone().appendTo($("#list-of-images2"));
+          $(option).clone().appendTo($("#load-options"));
 
     });
 }
-
-
-/// As user clicks on image name option, change load selection name to chosen image name
-cat_list = $("#list-of-categories"); cat_list.off().on("change",load3);

@@ -5,7 +5,13 @@ body {
     width: 100%;
     padding: 0px;
     overflow-x: hidden;
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";font-size:1rem;font-weight:400;line-height:1.5;color:#212529;text-align:left;background-color:#fff
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    font-size:1rem;
+    font-weight:400;
+    line-height:1.5;
+    color:#212529;
+    text-align:left;
+    background-color:rgb(250,250,250)
 }
 
 a {
@@ -102,25 +108,13 @@ button:hover {
     text-align: left;
 }
 
-#category_selection_div button, #category_creation-div button, #category_creation_div button, #category_creation_div2 button {
+#category_selection_div button, #category_creation-div button, #creation_div button, .selection_div button {
         border: solid #ddd 1px;
                 font-weight:100
 }
 
-#category_selection_div button:hover {
-        background-color:#f1f1f1;
-    color:#333;
-    font-weight:bold
-}
-
-#category_creation-div button:hover {
-        background-color:#f1f1f1;
-    color:#333;
-    font-weight:bold
-}
-
-#category_creation_div button:hover, #category_creation_div2 button:hover {
-        background-color:#f1f1f1;
+#category_selection_div button:hover, #category_creation-div button:hover, #creation_div button:hover, .selection_div button:hover {
+    background-color:#f1f1f1;
     color:#333;
     font-weight:bold
 }
@@ -140,7 +134,6 @@ button:hover {
   font-size: 12px;
 }
 
-
 .dropdown-content a {
   color: #333;
   padding: 5px 5px;
@@ -153,8 +146,6 @@ button:hover {
 .dropdown:hover .dropdown-content {display: block;}
 
 .dropdown:hover .dropbtn {background-color: #EEE;}
-
-
 
 .toast {
     padding: 5px;
@@ -187,29 +178,6 @@ button:hover {
 .toast.hide {
 	display: none
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /* The container */
 .label-container {
@@ -279,15 +247,6 @@ button:hover {
   transform: rotate(45deg);
 }
 
-
-
-
-
-
-
-
-
-
 .file-dropdown-content {
   padding: 10px;
     border: solid 1px #EEE;
@@ -299,7 +258,6 @@ button:hover {
   font-size: 12px;
 }
 
-
 .file-dropdown-content a {
   color: #333;
   padding: 5px 5px;
@@ -309,21 +267,11 @@ button:hover {
 
 .file-dropdown-content a:hover {background-color: #ddd;}
 
-
-
 .center {
   margin: auto;
   width: 50%;
   padding: 10px;
 }
-
-
-
-
-
-
-
-
 
 :root {
   --select-border: #777;
@@ -331,12 +279,13 @@ button:hover {
   --select-arrow: var(--select-border);
 }
 
-
 *,
 *::before,
+
 *::after {
   box-sizing: border-box;
 }
+
 select {
   // A reset of styles, including removing the default dropdown arrow
   appearance: none;
@@ -351,7 +300,6 @@ select {
   line-height: inherit;
 }
 
-
 select::-ms-expand {
   display: none;
 }
@@ -361,6 +309,7 @@ select::-ms-expand {
         outline: none;
 
 }
+
 .select {
   width: 100%;
   min-width: 15ch;
@@ -378,14 +327,12 @@ select::-ms-expand {
 
 }
 
-
 input[type=text] {
     height: 30px;
     border: 1px solid #999
 }
 
-
-#category_creation_div, #category_creation_div2 {
+#creation_div, .selection_div {
       padding: 10px;
     border: solid 1px #EEE;
   background-color: #fff;
@@ -394,7 +341,6 @@ input[type=text] {
   font-size: 12px;
     margin-top: 10px;
 }
-
 
 #colorCanvas {
     cursor: pointer;

@@ -1,112 +1,83 @@
 {% extends "personal/header.html" %}
-
 {% block content %}
-    
-
-                    
-
-        <div  name="category_creation_div" id="category_creation_div" style="border: solid 1px #FFF;">
-
-            <br>
-           Select group to edit: <select style="width:100%; height:40px; font-weight:bold; color:gray" id = "edit-list-of-categories"> 
-    {% for group in category_list %}
-<br>
-<option value = '{{group}}' >{{group}}</option>
-
-
-<br>
-{% endfor %}
-
-    </select>  
+<div id="categorygroup_updates" class="center" style="width:90%; margin-top:20px">
+   <div hidden class="hidden">
+      <textarea hidden id="alloptions">{% for item in groups_and_matrices %}{% if item.0 == "all" %}{% for matrix in item.1 %}{{matrix}}---end---{% endfor %}{% endif %}{% endfor %}</textarea>
+      <textarea hidden id="matrices">{{matrices}}</textarea>
+      <input hidden type="text" id="load_edit_selection" name="load_edit_selection" value='{{group}}'>
+   </div>
+   <div class = "CurrentOptions">
+      <div style="height:40px">
+         <div style="float:left; width:60%; height:40px">
+            <select style="width: 100%; height:40px; font-weight:bold; color:darkslateblue; font-size:12px" id = "edit-list-of-categorygroup" onchange="show_views()">
+               <option disabled selected value>select group</option>
+               <option value='-1'>--- create new ----</option>
+               {% for group in group_list %}
+               <option value = '{{group}}'>{{group}}</option>
+               {% endfor %}
+            </select>
+         </div>
+         <div style="float:left; width: 25%; margin-left: 15%; height:40px">
+            <button disabled id = "deletecategory" onclick="delete_categorygroup()" style="width: 100%; height: 40px; float:left; color: #CCC; background-color:#EEE; cursor: not-allowed;" >Delete Group</button>
+         </div>
+         <div name="category_creation_div" id="category_creation_div" style="display: none;">
+            <form action="" method="post">
+               {% csrf_token %}
+               <div style="float:left; width:100%; height:40px; margin-top:10px;">
+                  <input type="text" name="groupfield" id="groupfield" placeholder="Group name" style="width:100%; float:left; height:40px;">
+               </div>
+               <div style="float:left; width: 100%; height:40px">
+                  <button type="submit" name="Create Group" value="Create Group" id="create_category" style="width:100%; height: 40px;">Create</button>
+               </div>
+            </form>
+         </div>
+      </div>
+      <div class = "categoryshow" style="width:100%; margin-top:10px">
+         <b>Images in group:</b>
+         <br/>
+         <div style="position:relative">
+            <select style="border: 1px solid #999; color:black; width: 100%" id = "edit-list-of-images" size="5" multiple="multiple" >
+               {% for item in groups_and_matrices %}
+               <br>
+               {% for matrix in item.1 %}
+               <option class = '{{item.0}}' value = '{{matrix}}'>{{matrix}}</option>
+               <br>
+               {% endfor %}
+               <br>
+               <br>
+               {% endfor %}
+            </select>
+            <canvas id="image_canvas2" width="100" height="100" style="width:40%; border:1px solid #aaa; position: absolute; right: 5px; top: 5px; background-color: white; display: none;"/>
+         </div>
+         <button onclick="updateOptions()" id="update-category-button" style="display: none; width:100%; min-width:80px; height:30px;float: left;" >Update Group</button>
+      </div>
+   </div>
+   <div class="transferButtons">
+      <div class = "categoryshow">
+         <div>
+            <input type='button' onclick="rightToLeft()" value ='←' style='float:left;'>
+            <input type='button' onclick="leftToRight()" value ='→'>
+         </div>
+         <br>
+         <form  hidden action="" method="post" name="load_drawing_form" style="height:10px" >
+            {% csrf_token %}
+            <br/>
+            <button type="submit" name="Update Group" value="Update Group" id="update_categorygroup" style="width:150px;" class="dropbtn">Update Group</button>
+            <textarea name='selected_options' id="selected_options"></textarea>
+            <input name="selected_name_edit" id="selected_name_edit">
+            <button type="submit" name="Delete Group" value="Delete Group" id="delete_categorygroup" style="width:150px;" class="dropbtn">Delete Group</button>
+         </form>
+      </div>
+   </div>
+   <div class="AvailableOptions" style="margin-top:50px">
+      <div class = "categoryshow">
+         <b>Available Images:</b>
+         <br/>
+         <div style="position:relative">
+            <select style="border: 1px solid #999; color:gray; float: left; width:100%"  multiple="multiple" id='available-options'></select>
+            <canvas id="image_canvas" width="100" height="100" style="width:40%; border:1px solid #aaa; position: absolute; right: 5px; top:5px; background-color: white; display: none;"/>
+         </div>
+      </div>
+   </div>
 </div>
-            
-
-    
-
-
-   
-<div id="category_updates" class="center" style="width:90%; margin-top:20px">
-
-
-
-
-<div hidden class="hidden">
-    <textarea hidden id="alloptions">{% for item in category_list2 %}{% if item.0 == "all" %}{% for matrix in item.1 %}{{matrix}}---end---{% endfor %}{% endif %}{% endfor %}</textarea> 
-
-</div>
-    
-<div class="AvailableOptions">
-
-    <b>Available Images:</b><br/>
-<select class = 'list-group' style="border: 1px solid #999; color:gray"  multiple="multiple" id='available-options'>
-        </select>
-</div>
-<div class="transferButtons">
-  <div>
-      
-      <input type='button' onclick="rightToLeft()" id='btnLeft' value ='←' style='  float:left;'>
-  <input type='button' onclick="leftToRight()" id='btnRight' value ='→'>
-    </div>
-<br>
-  <button onclick="updateOptions()" style="width:100%" >Update Group</button>
-  <button onclick="delete_category()" style="width:100%" >Delete Group</button>
-    
-    <form  hidden action="" method="post" name="load_drawing_form" style="height:10px" >
-        {% csrf_token %}
-  <br/><button type="submit" name="Update Category" value="Update Category" id="update_category" style="width:150px;" class="dropbtn">Update Group</button>
-  <textarea name='selected_options' id="selected_options"></textarea>
-            <input name="selected_category_name2" id="selected_category_name2">
-        
-        
-        <button type="submit" name="Delete Category" value="Delete Category" id="delete_category" style="width:150px;" class="dropbtn">Delete Group</button>
-    </form> 
-  
-  
-  
-  
-  
-</div>
-
-<div class = "CurrentOptions">
-
-<b>Images in group:</b><br/>
-<select style="border: 1px solid #999; color:black" id = "edit-list-of-images" size="5" class="list-group" multiple="multiple" > 
-    {% for item in category_list2 %}
-<br>
-{% for matrix in item.1 %}
-<option class = '{{item.0}}' value = '{{matrix}}'>{{matrix}}</option>
-
-
-<br>
-{% endfor %}
-<br><br>
-{% endfor %}
-    
-        </select>
-
-
-
-</div>
-</div>
-
-
-        <div  name="category_creation_div" id="category_creation_div2" style="border: solid 1px #FFF;">
-
-            <br>
-                        <form action="" method="post">
-        {% csrf_token %}
-                            Create new group:
-                            <br>
-            <input type="text" name="categoryfield" id="categoryfield" placeholder="New group name" style="width: 60%;">
-            <button type="submit" name="CreateCategory" value="Create Category" style="width:35%;">Submit</button>
-        </form>
-
-
-</div>
-
-{% endblock %}    
-
-
-    
-
-	
+{% endblock %}
