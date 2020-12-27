@@ -267,7 +267,10 @@ def group_edit_request(request):
     groups_and_matrices = [(group.group_name, [matrix.matrix_name for matrix in group.matrices.all()]) for group in [group for group in Group.objects.all()]] # Get list of tuples of all group-matrices pairs
     group_list = Group.objects.exclude(group_name="all") # Get list of all groups to show in view
     
+    matrices = {matrix.matrix_name: matrix.matrix_value for matrix in Matrix.objects.all()}
+    matrices = json.dumps(matrices)
     
+    # Actions based on form request (when user submits a form by clicking one of the buttons)    
     
     if request.method == 'POST':
         
@@ -292,7 +295,7 @@ def group_edit_request(request):
             #group_list = Group.objects.exclude(group_name="all")
 
 
-            return render(request = request, template_name = "personal/group_edit.html", context={"groups_and_matrices":groups_and_matrices, "group_list":group_list, "group":group_name,})
+            return render(request = request, template_name = "personal/group_edit.html", context={"groups_and_matrices":groups_and_matrices, "group_list":group_list, "group":group_name, "matrices": matrices,})
 
     
         # If request is to create a new group
@@ -305,7 +308,7 @@ def group_edit_request(request):
             group_list = Group.objects.exclude(group_name="all") # Update list of all groups to show in view
 
 
-            return render(request = request, template_name = "personal/group_edit.html", context={"groups_and_matrices":groups_and_matrices, "group_list":group_list, "group": new_group,})
+            return render(request = request, template_name = "personal/group_edit.html", context={"groups_and_matrices":groups_and_matrices, "group_list":group_list, "group": new_group, "matrices": matrices,})
     
         # If request is to delete group
         elif 'Delete Group' in request.POST:
@@ -317,10 +320,10 @@ def group_edit_request(request):
             group_list = Group.objects.exclude(group_name="all") # Update list of all groups to show in view
             
 
-            return render(request = request, template_name = "personal/group_edit.html", context={"groups_and_matrices":groups_and_matrices, "group_list":group_list, "group": "0",})
+            return render(request = request, template_name = "personal/group_edit.html", context={"groups_and_matrices":groups_and_matrices, "group_list":group_list, "group": "0", "matrices": matrices,})
         
     
-    return render(request = request, template_name = "personal/group_edit.html", context={"groups_and_matrices":groups_and_matrices, "group_list":group_list, "group": "0",})
+    return render(request = request, template_name = "personal/group_edit.html", context={"groups_and_matrices":groups_and_matrices, "group_list":group_list, "group": "0", "matrices": matrices,})
 
 
 # Logout view
