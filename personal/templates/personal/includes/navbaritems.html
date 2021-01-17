@@ -1,11 +1,9 @@
 
    {% with url_name=request.resolver_match.url_name %}
      {% if user.is_authenticated %}
-             <li class="{% if url_name == 'index' %}active{% endif %}"><a href="/">{% if user.is_superuser %}Draw{% else %}View{% endif %}</a></li>
-{% if user.is_superuser %}
+             <li class="{% if url_name == 'index' %}active{% endif %}"><a href="/">Draw</a></li>
             <li class="{% if url_name == 'category_edit' %}active{% endif %}"><a href="/category_edit">Edit Categories</a></li>
             <li class="{% if url_name == 'group_edit' %}active{% endif %}"><a href="/group_edit">Edit Groups</a></li>
-{% endif %}
              <li class="{% if url_name == 'profile' %}active{% endif %}"><a href="/profile">{{user.username|title}}</a></li>
 {% if user.is_superuser %}
                           <li><a href="/admin">Admin</a></li>

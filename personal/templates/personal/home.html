@@ -8,7 +8,7 @@
 
 <br>
 
-<div {% if not user.is_superuser %}hidden{%endif%}  name="colors_and_brushes" class="center" style="width:400px">
+<div  name="colors_and_brushes" class="center" style="width:400px">
   
 
   <img src="https://www.clipartkey.com/mpngs/m/98-980616_paint-brush-paint-brush-black-and-white.png" id="brushimage" width="34" height="34" style="border:3px solid #333; cursor: pointer;">
@@ -23,7 +23,7 @@
 
 
 
-<div {% if not user.is_superuser %}hidden{%endif%}  id = "canvas-buttons">
+<div  id = "canvas-buttons">
     <button id="clear" style="width:50px;">Clear</button>
     <button onclick="invert_colors()">⇵</button>
     <button onclick="shift_left()">←</button>
@@ -37,7 +37,7 @@
 
 
 <div name="drawingcanvas_div" style="width=365px; position:relative;">  
-    {% if not user.is_superuser %}<div style="position: absolute;top:0;left:0;width: 367px;height:367px;z-index:2;"></div>{%endif%}
+    
     <canvas id="drawingCanvas" width="365" height="365" style="border:1px solid #333; background-color:white;"/>
     </div>
 
@@ -45,8 +45,8 @@
 
     <div id="canvas-bottom-buttons">
 <div style="float: left">
-<button {% if not user.is_superuser %}hidden{%endif%}  onclick="show_dimensions()">Set dimensions</button>
-    <div {% if not user.is_superuser %}hidden{%endif%}  style="display: none;" class="file-dropdown-content"  id="matrix_dimensions_div">    
+<button onclick="show_dimensions()">Set dimensions</button>
+    <div  style="display: none;" class="file-dropdown-content"  id="matrix_dimensions_div">    
     <label for="input_matrix_dimensions" style="width:186px; margin-right:10px;">Matrix dimensions:</label>
     <input type="number" min=1 id="input_matrix_dimensions" value='{{dimensions}}' onchange="updateDimensions()" style="width:50px;">       
     <button type="button" id="set_dimensions" onclick="set_dimensions()" style="margin-left: 15px; width:110px;">Set</button>  
@@ -54,7 +54,7 @@
 
 </div>
     
-<div {% if not user.is_superuser %}hidden{%endif%}  style="float:left;">
+<div  style="float:left;">
 <button onclick="show_save()">Save image</button>
 
 

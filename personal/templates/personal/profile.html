@@ -4,9 +4,10 @@
 
 <div class="container center" style="width:90%;justify-content:center; ">
     <ul id="profile-items" class="right hide-on-med-and-down" style="list-style-type: none;">
-             <li><b>User name:</b> {{user.username|title}}</li>
+             <li><b>Username:</b> {{user.username|title}}</li>
              <li><b>Role:</b> {% if user.is_superuser %}Superuser{% else %}Basic{% endif %}
 </li>
+             <li><b>Date joined:</b> {{user.date_joined}}</li> 
     </ul>
 </div>
 
