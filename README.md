@@ -1,4 +1,4 @@
-# Paint with Erica!
+# Paint with Me
 
 This project allows you to create images in a square canvas and manipulate them online. 
 
